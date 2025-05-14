@@ -9,7 +9,7 @@ server.use(cors());
 server.use(express.json());
 
 // Rotas
-server.use('/api/bugs', router);
+server.use('/bugs', router);
 
 // Rota de saúde
 server.get('/health', (req, res) => {

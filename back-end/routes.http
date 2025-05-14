@@ -3,8 +3,8 @@
 ### Listar todos os bugs
 GET http://localhost:3000/bugs
 
-### Obter um bug específico
-GET http://localhost:3000/bugs/1
+###Obter um bug específico
+# GET http://localhost:3000/bugs/1
 
 ### Criar um novo bug report
 POST http://localhost:3000/bugs
@@ -18,7 +18,7 @@ Content-Type: application/json
   "status": "não iniciado"
 }
 
-### Atualizar um bug existente
+### Atualizar o status de correção de um bug existente
 PUT http://localhost:3000/bugs/2
 Content-Type: application/json
 
@@ -27,7 +27,7 @@ Content-Type: application/json
   "priority": "alta"
 }
 
-### Deletar um bug
+### Deletar um bug reportado
 DELETE http://localhost:3000/bugs/3
 
 ### Filtros e consultas
