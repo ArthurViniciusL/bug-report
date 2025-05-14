@@ -1,0 +1,36 @@
+# routes.http
+
+### Listar todos os bugs
+GET http://localhost:3000/bugs
+
+### Obter um bug específico
+GET http://localhost:3000/bugs/1
+
+### Criar um novo bug report
+POST http://localhost:3000/bugs
+Content-Type: application/json
+
+{
+  "userEmail": "novousuario@exemplo.com",
+  "bugName": "Erro na validação do formulário",
+  "description": "O formulário aceita valores inválidos no campo de email",
+  "priority": "média",
+  "status": "não iniciado"
+}
+
+### Atualizar um bug existente
+PUT http://localhost:3000/bugs/2
+Content-Type: application/json
+
+{
+  "status": "em correção",
+  "priority": "alta"
+}
+
+### Deletar um bug
+DELETE http://localhost:3000/bugs/3
+
+### Filtros e consultas
+GET http://localhost:3000/bugs?priority=alta
+GET http://localhost:3000/bugs?status=em%20correção
+GET http://localhost:3000/bugs?userEmail=usuario1@exemplo.com
