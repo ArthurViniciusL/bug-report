@@ -1,18 +1,57 @@
+:root {
+    --primary-color: #000000;
+    --secondary-color: #ffffff;
+    --vue-green-01: #42b883;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Consolas, monospace;
+}
+
 html {
-  display: flex;
-  flex-direction: column;
+    width: 100dvw;
+    height: 100dvh;
 
-  width: fit-content;
-  height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #f8f8f8;
 }
+
 body {
-  width: 100dvw;
-  height: 100dvh;
-
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #f8f8f8;
+    width: min(80rem, 95%);
+    min-height: 100%;
 }
 
-main {}
+main {
+    width: 100%;
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    display: flex;
+    justify-content: center;
+}
+
+.app-content {
+    width: min(80rem, 95%);
+
+    padding: 2rem;
+
+    border-radius: 0.3rem;
+    background-color: #ffffff;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.2s ease;
+    border-radius: 0.3rem;
+    &:hover{
+        transition: 0.2s ease;
+        text-decoration: underline;
+    }
+}

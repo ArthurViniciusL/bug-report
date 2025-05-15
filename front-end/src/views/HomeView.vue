@@ -1,5 +1,22 @@
+<script setup lang="ts">
+import {NForm, NFormItem, NButton, NInput} from 'naive-ui';
+
+import {ref} from "vue";
+
+interface IUser {
+  email: string;
+  bugName: string;
+  description: string;
+}
+
+const user = ref(<IUser>{
+  email: "",
+  bugName: ""
+});
+
+</script>
+
 <template>
-  <main class="form-container">
     <n-form
     >
       <n-form-item label="* Digite seu e-mail:" path="user.email">
@@ -17,48 +34,27 @@
         />
       </n-form-item>
 
+      <button class="btn-send">
+        Enviar
+      </button>
 
-      <!--priority-->
-      <n-button class="btn-send" size="large">Enviar</n-button>
     </n-form>
-  </main>
 </template>
 
-<script setup lang="ts">
-import {NForm, NFormItem, NButton, NInput} from 'naive-ui';
-
-import {ref} from "vue";
-
-interface IUser {
-  email: string;
-  bugName: string;
-  description:string;
-
-}
-
-const user = ref(<IUser>{
-  email: "",
-  bugName: ""
-});
-
-</script>
-
-
 <style>
-.form-container {
-  width: 80rem;
-  max-width: 95%;
-
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 2rem;
-
-  border-radius: 0.3rem;
-  background-color: #ffffff;
-}
 
 .btn-send {
   width: 100%;
+  padding: 1rem;
+  color: var(--vue-green-01);
+  background-color: transparent;
+  border: dashed var(--vue-green-01) 0.5px;
+
+
+  &:hover {
+    color: #ffffff;
+    background-color: var(--vue-green-01);
+  }
 }
 
 </style>
