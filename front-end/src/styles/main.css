@@ -1,6 +1,8 @@
+@import url("./base.css");
+
 :root {
-    --primary-color: #000000;
-    --secondary-color: #ffffff;
+    --primary-white: #ffffff;
+    --secondary-white: #f8f8f8;
     --vue-green-01: #42b883;
 }
 
@@ -19,7 +21,7 @@ html {
     align-items: center;
     flex-direction: column;
 
-    background-color: #f8f8f8;
+    background-color: var(--secondary-white);
 }
 
 body {
@@ -35,6 +37,8 @@ main {
 
     display: flex;
     justify-content: center;
+
+    overflow: auto;
 }
 
 .app-content {
@@ -43,7 +47,9 @@ main {
     padding: 2rem;
 
     border-radius: 0.3rem;
-    background-color: #ffffff;
+    background-color: var(--primary-white);
+
+    overflow: auto;
 }
 
 button {
@@ -54,4 +60,8 @@ button {
         transition: 0.2s ease;
         text-decoration: underline;
     }
+}
+
+h1,h2,h3,h4,h5,h6, th {
+    text-transform: capitalize;
 }

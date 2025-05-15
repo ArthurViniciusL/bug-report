@@ -5,7 +5,7 @@ export const priorities = {
 };
 
 export const statuses = {
-    NOT_STARTED: 'não iniciado',
+    NOT_STARTED: 'não corrigido',
     IN_PROGRESS: 'em correção',
-    COMPLETED: 'finalizado'
+    COMPLETED: 'corrigido'
 };

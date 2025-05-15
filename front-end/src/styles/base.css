@@ -1,0 +1,7 @@
+.app-font-capitalize {
+    text-transform: lowercase;
+}
+
+.app-pointer {
+    cursor: pointer;
+}
