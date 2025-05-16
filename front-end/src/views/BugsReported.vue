@@ -18,16 +18,13 @@
         <td>{{ bug.id }}</td>
         <td>{{ bug.userEmail }}</td>
         <td>{{ bug.bugName }}</td>
-
         <n-tooltip v-if="bug.description.length > 50" placement="bottom" trigger="hover">
           <template #trigger>
             <td>{{ bug.description.slice(0, 50) + '...' }}</td>
           </template>
           <span class="app-font-capitalize"> {{ bug.description }} </span>
         </n-tooltip>
-
         <td v-else>{{ bug.description }}</td>
-
         <td>{{ bug.priority }}</td>
 
         <td>
@@ -50,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import {NButton, NTooltip, NSpace, NPopselect} from 'naive-ui';
+import {NButton, NTooltip, NSpace, NPopselect, NAutoComplete} from 'naive-ui';
 import {ref, onMounted} from 'vue';
 import axios from 'axios';
 
@@ -100,10 +97,13 @@ const updateBugStatus = async (bugId: number, newStatus: string) => {
 
 const getStatusButtonType = (status: string) => {
   switch (status) {
-    case 'em correção': return 'warning';
-    case 'corrigido': return 'primary';
+    case 'em correção':
+      return 'warning';
+    case 'corrigido':
+      return 'primary';
     case 'não corrigido':
-    default: return 'default';
+    default:
+      return 'default';
   }
 };
 

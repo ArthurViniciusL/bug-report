@@ -65,3 +65,8 @@ button {
 h1,h2,h3,h4,h5,h6, th {
     text-transform: capitalize;
 }
+
+a {
+    cursor: pointer;
+    color:black
+}
