@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h2>Bugs Registrados:</h2>
-    <table class="table">
+    <h2>Bugs reportado:</h2>
+    <p style="margin-top: 2rem" v-if="bugsList.length <= 0">Nenhum bug reportado</p>
+    <table v-else class="table">
       <thead>
       <tr>
         <th>id</th>
@@ -10,21 +11,25 @@
         <th>descrição</th>
         <th>prioridade</th>
         <th>status</th>
+        <th>
+          Deletar
+        </th>
       </tr>
       </thead>
       <tbody>
-      <!-- Linhas da tabela geradas dinamicamente -->
       <tr v-for="bug in bugsList" :key="bug.id">
         <td>{{ bug.id }}</td>
         <td>{{ bug.userEmail }}</td>
         <td>{{ bug.bugName }}</td>
+
         <n-tooltip v-if="bug.description.length > 50" placement="bottom" trigger="hover">
-          <template #trigger>
+          <template #trigger class="des">
             <td>{{ bug.description.slice(0, 50) + '...' }}</td>
           </template>
           <span class="app-font-capitalize"> {{ bug.description }} </span>
         </n-tooltip>
         <td v-else>{{ bug.description }}</td>
+
         <td>{{ bug.priority }}</td>
 
         <td>
@@ -33,12 +38,24 @@
               :options="statusOptions"
               size="large"
               trigger="click"
-              @update:value="(value) => handleStatusChange(value, bug.id)"
+              @update:value="(value) => handleUpdateStatus(value, bug.id)"
           >
             <n-button style="width: 10rem" strong round :type="getStatusButtonType(bug.status)">
               {{ getStatusLabel(bug.status) }}
             </n-button>
           </n-popselect>
+        </td>
+
+        <td>
+          <button @click="handleDeleteReport(bug.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-trash-icon lucide-trash">
+              <path d="M3 6h18"/>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+            </svg>
+          </button>
         </td>
       </tr>
       </tbody>
@@ -47,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import {NButton, NTooltip, NSpace, NPopselect, NAutoComplete} from 'naive-ui';
+import {NButton, NTooltip, NPopselect} from 'naive-ui';
 import {ref, onMounted} from 'vue';
 import axios from 'axios';
 
@@ -71,11 +88,23 @@ const statusOptions = [
   {label: 'Corrigido', value: 'corrigido'},
 ];
 
-const getStatusLabel = (value: string) => {
+function getStatusLabel(value: string) {
   return statusOptions.find(option => option.value === value)?.label || value;
 };
 
-const updateBugStatus = async (bugId: number, newStatus: string) => {
+function getStatusButtonType(status: string) {
+  switch (status) {
+    case 'em correção':
+      return 'warning';
+    case 'corrigido':
+      return 'primary';
+    case 'não corrigido':
+    default:
+      return 'default';
+  }
+};
+
+async function updateStatus(bugId: string, newStatus: string) {
   try {
     const response = await axios.put(`http://localhost:3000/bugs/${bugId}`, {
       status: newStatus
@@ -95,22 +124,28 @@ const updateBugStatus = async (bugId: number, newStatus: string) => {
   }
 };
 
-const getStatusButtonType = (status: string) => {
-  switch (status) {
-    case 'em correção':
-      return 'warning';
-    case 'corrigido':
-      return 'primary';
-    case 'não corrigido':
-    default:
-      return 'default';
-  }
-};
-
-const handleStatusChange = async (newStatus: string, bugId: number) => {
-  await updateBugStatus(bugId, newStatus);
+async function handleUpdateStatus(newStatus: string, bugId: string) {
+  await updateStatus(bugId, newStatus);
   selectedStatus.value = null;
 };
+
+async function handleDeleteReport(bugId: string) {
+  try {
+    const response = await axios.delete(`http://localhost:3000/bugs/${bugId}`);
+
+    if (response.status >= 200 && response.status < 300) {
+      const bugIndex = bugsList.value.findIndex(bug => bug.id === bugId);
+      if (bugIndex !== -1) {
+        bugsList.value.splice(bugIndex, 1);
+      }
+    } else {
+      console.error('Failed to delete bug:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error deleting bug report:', error);
+    throw error;
+  }
+}
 
 onMounted(async () => {
   try {
@@ -121,7 +156,6 @@ onMounted(async () => {
     console.error('Erro ao carregar bugs:', error);
   }
 });
-
 </script>
 
 <style scoped>
@@ -134,7 +168,7 @@ onMounted(async () => {
 
 .table th, .table td {
   padding: 0.75rem;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid var(--secondary-white);
 
   &:hover {
@@ -157,4 +191,5 @@ onMounted(async () => {
   color: var(--vue-green-01);
   background-color: var(--secondary-white);
 }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <n-form @submit.prevent="handleSubmit">
+  <n-form >
     <n-form-item label="* Digite seu e-mail:" path="user.email">
       <n-auto-complete
           v-model:value="user.email"
